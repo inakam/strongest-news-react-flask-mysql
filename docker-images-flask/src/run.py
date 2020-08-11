@@ -254,7 +254,7 @@ def get_search_article():
     articles = Article.query.filter(Article.title.like('%{}%'.format(keyword)))
     return article_titles_schema.jsonify(articles)
 
-# Usage: /category?type=エンタがビタミン
+# Usage: /categories?type=エンタがビタミン
 @app.route("/categories", methods=["GET"])
 def get_category_article():
     _type = request.args.get('type', '')
