@@ -148,14 +148,14 @@ def get_all_comments():
     return comments_schema.jsonify(comments)
 
 
-@app.route("/comment/<id>", methods=["GET"])
+@app.route("/comments/<id>", methods=["GET"])
 def get_comment(id):
     comment = Comment.query.filter_by(
         article_id=id).order_by(Comment.id).all()
     return comments_schema.jsonify(comment)
 
 
-@app.route("/comment", methods=["POST"])
+@app.route("/comments", methods=["POST"])
 def post_comment():
     comment = Comment(
         name=request.form.get("name"),
@@ -170,7 +170,7 @@ def post_comment():
     return response, 201
 
 
-@app.route("/comment/<id>", methods=["PUT"])
+@app.route("/comments/<id>", methods=["PUT"])
 def put_comment(id):
     comment = Comment.query.filter_by(id=id).first()
     if not comment:
@@ -186,7 +186,7 @@ def put_comment(id):
     return comment_schema.jsonify(comment)
 
 
-@app.route("/comment/<id>", methods=['DELETE'])
+@app.route("/comments/<id>", methods=['DELETE'])
 def delete_comment(id):
     comment = Comment.query.filter_by(id=id).first()
     if not comment:
@@ -199,38 +199,43 @@ def delete_comment(id):
     return jsonify(None), 204
 
 
-@app.route("/article/<id>", methods=["GET"])
+@app.route("/articles/<id>", methods=["GET"])
 def get_article(id):
     article = Article.query.get(id)
     return article_schema.jsonify(article)
 
-
+# usage: articles?order=desc&limit=9
 @app.route("/articles", methods=["GET"])
 def get_all_articles():
-    articles = Article.query.all()
-    return articles_schema.jsonify(articles)
+    if request.args:
+        order_param = request.args.get("order", "")
+        limit_param = request.args.get("limit", 9, type=int)
+        order = desc(Article.created_at)
+        if order_param:
+            if order_param.lower() == "asc":
+                order = Article.created_at
+
+        articles = Article.query.order_by(order).limit(limit_param)
+        return article_titles_schema.jsonify(articles)
+    else:
+        articles = Article.query.all()
+        return articles_schema.jsonify(articles)
 
 
-@app.route("/articles/latest", methods=["GET"])
-def get_latest_articles():
-    articles = Article.query.order_by(desc(Article.created_at)).limit(9)
-    return article_titles_schema.jsonify(articles)
-
-
-@app.route("/articles/title", methods=["GET"])
+@app.route("/titles", methods=["GET"])
 def get_all_article_titles():
-    articles = Article.query.all()
+    page = request.args.get("page", "")
+    if (page):
+        # ページングの実装をした場合用
+        articles = Article.query.order_by(
+            Article.id).limit(9).offset(9 * (int(page)-1))
+    else:
+        # パラメータの指定がなければ全件を返す
+        articles = Article.query.all()
     return article_titles_schema.jsonify(articles)
 
 
-@app.route("/articles/title/<page>", methods=["GET"])
-def get_article_titles(page):
-    articles = Article.query.order_by(
-        Article.id).limit(9).offset(9 * (int(page)-1))
-    return article_titles_schema.jsonify(articles)
-
-
-@app.route("/user/profile", methods=["GET"])
+@app.route("/users/profile", methods=["GET"])
 @login_required
 def get_user(id):
     user = User.query.get(current_user.id)
@@ -242,15 +247,15 @@ def get_all_users():
     users = User.query.all()
     return users_schema.jsonify(users)
 
-# Usage: /search?keyword=example
-@app.route("/search", methods=["GET"])
+# Usage: /keywords?keyword=example
+@app.route("/keywords", methods=["GET"])
 def get_search_article():
     keyword = request.args.get('keyword', '')
     articles = Article.query.filter(Article.title.like('%{}%'.format(keyword)))
     return article_titles_schema.jsonify(articles)
 
 # Usage: /category?type=エンタがビタミン
-@app.route("/category", methods=["GET"])
+@app.route("/categories", methods=["GET"])
 def get_category_article():
     _type = request.args.get('type', '')
     articles = Article.query.filter(Article.type.like('%{}%'.format(_type)))

@@ -11,7 +11,7 @@ class NewsLatestView extends React.Component {
     };
   }
   componentDidMount() {
-    fetch('/articles/latest')
+    fetch('/articles?order=desc&limit=9')
       .then((res) => res.json())
       .then(
         (json) => {

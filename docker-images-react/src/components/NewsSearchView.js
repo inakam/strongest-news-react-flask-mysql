@@ -13,7 +13,7 @@ class NewsSearchView extends React.Component {
   }
   componentDidMount() {
     const values = queryString.parse(this.props.location.search);
-    fetch(`/search?keyword=${values.keyword}`)
+    fetch(`/keywords?keyword=${values.keyword}`)
       .then((res) => res.json())
       .then(
         (json) => {

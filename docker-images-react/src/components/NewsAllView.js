@@ -11,7 +11,7 @@ class NewsAllView extends React.Component {
     };
   }
   componentDidMount() {
-    fetch('/articles/title')
+    fetch('/titles')
       .then((res) => res.json())
       .then(
         (json) => {

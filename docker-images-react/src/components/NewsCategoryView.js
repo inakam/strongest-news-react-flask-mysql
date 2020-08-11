@@ -13,7 +13,7 @@ class NewsCategoryView extends React.Component {
   }
   componentDidMount() {
     const values = queryString.parse(this.props.location.search);
-    fetch(`/category?type=${values.type}`)
+    fetch(`/categories?type=${values.type}`)
       .then((res) => res.json())
       .then(
         (json) => {
