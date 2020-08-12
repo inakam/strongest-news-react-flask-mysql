@@ -204,18 +204,12 @@ def get_article(id):
     article = Article.query.get(id)
     return article_schema.jsonify(article)
 
-# usage: articles?order=desc&limit=9
 @app.route("/articles", methods=["GET"])
 def get_all_articles():
     if request.args:
-        order_param = request.args.get("order", "")
         limit_param = request.args.get("limit", 9, type=int)
-        order = desc(Article.created_at)
-        if order_param:
-            if order_param.lower() == "asc":
-                order = Article.created_at
 
-        articles = Article.query.order_by(order).limit(limit_param)
+        articles = Article.query.order_by(desc(Article.created_at)).limit(limit_param)
         return article_titles_schema.jsonify(articles)
     else:
         articles = Article.query.all()
@@ -225,10 +219,13 @@ def get_all_articles():
 @app.route("/titles", methods=["GET"])
 def get_all_article_titles():
     page = request.args.get("page", "")
+    limit_param = request.args.get("limit", "")
     if (page):
         # ページングの実装をした場合用
         articles = Article.query.order_by(
             Article.id).limit(9).offset(9 * (int(page)-1))
+    elif limit_param:
+        articles = Article.query.order_by(desc(Article.created_at)).limit(limit_param)
     else:
         # パラメータの指定がなければ全件を返す
         articles = Article.query.all()
