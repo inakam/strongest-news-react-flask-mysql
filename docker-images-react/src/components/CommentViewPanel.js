@@ -10,8 +10,10 @@ const CommentViewPanel = (props) => (
         <div className="table-responsive">
           <table className="table">
             <thead className="text-primary">
-              <th>ユーザー</th>
-              <th>コメント</th>
+              <tr>
+                <th>ユーザー</th>
+                <th>コメント</th>
+              </tr>
             </thead>
             <tbody>
               {props.commentArray.map((item) => (
