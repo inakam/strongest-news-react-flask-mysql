@@ -33,7 +33,7 @@ class NewsAllView extends React.Component {
     return (
       <div className="row">
         {this.state.items.map((item) => (
-          <NewsPanel title={item.title} img_url={item.img_url} page_url={item.id} key={item.id} />
+          <NewsPanel title={item.title} imgUrl={item.img_url} articleId={item.id} key={item.id} />
         ))}
       </div>
     );
