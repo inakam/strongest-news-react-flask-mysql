@@ -31,9 +31,9 @@ class NewsLatestView extends React.Component {
   }
   render() {
     return (
-      <div class="row">
+      <div className="row">
         {this.state.items.map((item) => (
-          <NewsPanel title={item.title} img_url={item.img_url} page_url={item.id} />
+          <NewsPanel title={item.title} img_url={item.img_url} page_url={item.id} key={item.id} />
         ))}
       </div>
     );
