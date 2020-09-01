@@ -16,7 +16,7 @@ const CommentViewPanel = (props) => (
               </tr>
             </thead>
             <tbody>
-              {props.commentArray.map((item) => (
+              {props.comments.map((item) => (
                 <tr>
                   <td>{item.name}</td>
                   <td>{item.detail}</td>

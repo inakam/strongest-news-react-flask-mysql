@@ -1,30 +1,41 @@
 import React from 'react';
-import './App.css';
+import '../App.css';
 import { Link } from 'react-router-dom';
 
-import CommentPostPanel from './CommentPostPanel';
-import CommentViewPanel from './CommentViewPanel';
-import NewsViewPanel from './NewsViewPanel';
+import CommentPostPanel from '../CommentPostPanel';
+import CommentViewPanel from '../CommentViewPanel';
+import NewsViewPanel from '../NewsViewPanel';
 
 class NewsDetailView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoaded: false,
-      item: [],
-      commentItem: [],
+      article: {
+        title: '',
+        img_url: '',
+        detail: '',
+        updated_at: null,
+        type: '',
+      },
+      comments: [],
     };
   }
   componentDidMount() {
     const { params } = this.props.match;
-    fetch(`/articles/${params.id}`)
+    this.fetchArticle(params.id);
+    this.fetchComments(params.id);
+  }
+  fetchArticle(articleId) {
+    fetch(`/articles/${articleId}`)
       .then((res) => res.json())
       .then(
         (json) => {
+          console.log('article', json);
           console.log(json);
           this.setState({
             isLoaded: true,
-            item: json,
+            article: json,
           });
         },
         (error) => {
@@ -34,14 +45,16 @@ class NewsDetailView extends React.Component {
           });
         }
       );
-    fetch(`/comments/${params.id}`)
+  }
+  fetchComments(articleId) {
+    fetch(`/comments/${articleId}`)
       .then((res) => res.json())
       .then(
         (json) => {
-          console.log(json);
+          console.log('comments', json);
           this.setState({
             isLoaded: true,
-            commentItem: json,
+            comments: json,
           });
         },
         (error) => {
@@ -53,23 +66,23 @@ class NewsDetailView extends React.Component {
       );
   }
   render() {
-    const item = this.state.item;
+    const { article, comments } = this.state;
     return (
       <>
         <div className="row">
           <NewsViewPanel
-            title={item.title}
-            img_url={item.img_url}
-            detail={item.detail}
-            updated_at={item.updated_at}
-            type={item.type}
+            title={article.title}
+            img_url={article.img_url}
+            detail={article.detail}
+            updated_at={article.updated_at}
+            type={article.type}
           />
         </div>
         <div className="row">
-          <CommentViewPanel commentArray={this.state.commentItem} />
+          <CommentViewPanel comments={comments} />
         </div>
         <div className="row">
-          <CommentPostPanel id={item.id} />
+          <CommentPostPanel id={article.id} />
         </div>
       </>
     );

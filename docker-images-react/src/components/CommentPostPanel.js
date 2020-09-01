@@ -1,12 +1,22 @@
 import React from 'react';
 
 class CommentPostPanel extends React.Component {
-  submitHandler = (event) => {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      message: '',
+    };
+    this.submitHandler = this.submitHandler.bind(this);
+    this.onChangeMessageHandler = this.onChangeMessageHandler.bind(this);
+    this.onChangeNameHandler = this.onChangeNameHandler.bind(this);
+  }
+  submitHandler(event) {
     event.preventDefault();
     const requestOptions = {
       method: 'POST',
       headers: new Headers({ 'Content-type': 'application/x-www-form-urlencoded' }),
-      body: `article_id=${this.article_id.value}&detail=${this.detail.value}&name=${this.name.value}`,
+      body: `article_id=${this.props.id}&detail=${this.state.message}&name=${this.state.name}`,
     };
     fetch('/comments', requestOptions)
       .then(function (response) {
@@ -16,7 +26,15 @@ class CommentPostPanel extends React.Component {
         console.log(error);
       });
     window.location.reload();
-  };
+  }
+  onChangeNameHandler(event) {
+    const name = event.target.value;
+    this.setState({ name: name });
+  }
+  onChangeMessageHandler(event) {
+    const message = event.target.value;
+    this.setState({ message: message });
+  }
   render() {
     return (
       <div id="comment-form" className="col-md-12">
@@ -25,16 +43,7 @@ class CommentPostPanel extends React.Component {
             <h4 className="card-title">コメントを投稿する</h4>
           </div>
           <div className="card-body">
-            <form onSubmit={this.submitHandler} method="POST">
-              <input
-                type="hidden"
-                name="article_id"
-                value={this.props.id}
-                ref={(input) => {
-                  this.article_id = input;
-                }}
-              />
-
+            <form onSubmit={this.submitHandler}>
               <div className="row">
                 <div className="col-md-3">
                   <div className="form-group">
@@ -43,9 +52,7 @@ class CommentPostPanel extends React.Component {
                       type="text"
                       name="name"
                       className="form-control"
-                      ref={(input) => {
-                        this.name = input;
-                      }}
+                      onChange={this.onChangeNameHandler}
                     />
                   </div>
                 </div>
@@ -58,9 +65,7 @@ class CommentPostPanel extends React.Component {
                     <textarea
                       name="detail"
                       className="form-control textarea"
-                      ref={(input) => {
-                        this.detail = input;
-                      }}
+                      onChange={this.onChangeMessageHandler}
                     ></textarea>
                   </div>
                 </div>
@@ -81,4 +86,4 @@ class CommentPostPanel extends React.Component {
   }
 }
 
-export default CommentPostPanel
+export default CommentPostPanel;

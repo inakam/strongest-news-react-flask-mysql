@@ -7,6 +7,8 @@ import NewsSearchView from './NewsSearchView';
 import NewsCategoryView from './NewsCategoryView';
 import { BrowserRouter, Route } from 'react-router-dom';
 
+import NewsDetailViewPage from './pages/NewsDetailPage';
+
 class App extends React.Component {
   render() {
     return (
@@ -16,7 +18,7 @@ class App extends React.Component {
           <Route path="/search" component={NewsSearchView} />
           <Route path="/category" component={NewsCategoryView} />
           <Route path="/latest" component={NewsLatestView} />
-          <Route path="/article/:id" component={NewsDetailView} />
+          <Route path="/article/:id" component={NewsDetailViewPage} />
         </div>
       </BrowserRouter>
     );
