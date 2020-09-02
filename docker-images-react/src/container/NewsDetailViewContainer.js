@@ -1,10 +1,9 @@
 import React from 'react';
-import '../App.css';
 import { Link } from 'react-router-dom';
 
-import CommentPostPanel from '../CommentPostPanel';
-import CommentViewPanel from '../CommentViewPanel';
-import NewsViewPanel from '../NewsViewPanel';
+import CommentPostPanel from '../components/CommentPostPanel';
+import CommentViewPanel from '../components/CommentViewPanel';
+import NewsViewPanel from '../components/NewsViewPanel';
 
 class NewsDetailView extends React.Component {
   constructor(props) {

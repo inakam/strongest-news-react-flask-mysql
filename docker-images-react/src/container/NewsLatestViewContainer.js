@@ -1,8 +1,8 @@
 import React from 'react';
-import './App.css';
-import NewsPanel from './NewsPanel';
 
-class NewsAllView extends React.Component {
+import NewsPanel from '../components/NewsPanel';
+
+class NewsLatestView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,7 +11,7 @@ class NewsAllView extends React.Component {
     };
   }
   componentDidMount() {
-    fetch('/titles')
+    fetch('/titles?limit=9')
       .then((res) => res.json())
       .then(
         (json) => {
@@ -40,4 +40,4 @@ class NewsAllView extends React.Component {
   }
 }
 
-export default NewsAllView;
+export default NewsLatestView;

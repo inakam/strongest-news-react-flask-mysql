@@ -1,9 +1,9 @@
 import React from 'react';
-import './App.css';
-import NewsPanel from './NewsPanel';
 import queryString from 'query-string';
 
-class NewsCategoryView extends React.Component {
+import NewsPanel from '../components/NewsPanel';
+
+class NewsSearchView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,7 +13,7 @@ class NewsCategoryView extends React.Component {
   }
   componentDidMount() {
     const values = queryString.parse(this.props.location.search);
-    fetch(`/categories?type=${values.type}`)
+    fetch(`/keywords?keyword=${values.keyword}`)
       .then((res) => res.json())
       .then(
         (json) => {
@@ -42,4 +42,4 @@ class NewsCategoryView extends React.Component {
   }
 }
 
-export default NewsCategoryView;
+export default NewsSearchView;
