@@ -125,9 +125,9 @@ class NewsDetailView extends React.Component {
         <div className="row">
           <NewsViewPanel
             title={article.title}
-            img_url={article.img_url}
+            imgUrl={article.img_url}
             detail={article.detail}
-            updated_at={article.updated_at}
+            updatedAt={article.updated_at}
             type={article.type}
           />
         </div>
