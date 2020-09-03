@@ -1,19 +1,19 @@
 import React from 'react';
 
 const SideBar = () => (
-  <div class="sidebar" data-color="white" data-active-color="danger">
-    <div class="sidebar-wrapper">
-      <ul class="nav">
+  <div className="sidebar" data-color="white" data-active-color="danger">
+    <div className="sidebar-wrapper">
+      <ul className="nav">
         <li>
           <a href="/">
-            <i class="nc-icon nc-bank"></i>
+            <i className="nc-icon nc-bank"></i>
             <p>ニュース一覧</p>
           </a>
         </li>
 
         <li>
           <a href="/latest">
-            <i class="nc-icon nc-watch-time"></i>
+            <i className="nc-icon nc-watch-time"></i>
             <p>最新のニュース</p>
           </a>
         </li>

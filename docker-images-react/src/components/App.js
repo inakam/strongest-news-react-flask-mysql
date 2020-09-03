@@ -15,11 +15,11 @@ import NewsDetailView from '../container/NewsDetailViewContainer';
 class App extends React.Component {
   render() {
     return (
-      <div class="wrapper">
+      <div className="wrapper">
         <SideBar />
-        <div class="main-panel">
+        <div className="main-panel">
           <NavBar />
-          <div class="content">
+          <div className="content">
             <BrowserRouter>
               <div>
                 <Route exact path="/" component={NewsAllView} />

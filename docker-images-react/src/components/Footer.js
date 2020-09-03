@@ -1,11 +1,11 @@
 import React from 'react';
 
 const Footer = () => (
-  <footer class="footer footer-black footer-white">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="credits ml-auto">
-          <span class="copyright">© Strong Engineer Co., Ltd.</span>
+  <footer className="footer footer-black footer-white">
+    <div className="container-fluid">
+      <div className="row">
+        <div className="credits ml-auto">
+          <span className="copyright">© Strong Engineer Co., Ltd.</span>
         </div>
       </div>
     </div>
