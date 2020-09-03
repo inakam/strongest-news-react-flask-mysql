@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import CommentPostPanel from '../components/CommentPostPanel';
 import CommentViewPanel from '../components/CommentViewPanel';
@@ -18,7 +17,14 @@ class NewsDetailView extends React.Component {
         type: '',
       },
       comments: [],
+      commentForm: {
+        name: '',
+        message: '',
+      },
     };
+    this.onChangeNameHandler = this.onChangeNameHandler.bind(this);
+    this.onChangeMessageHandler = this.onChangeMessageHandler.bind(this);
+    this.onSubmitCommentHandler = this.onSubmitCommentHandler.bind(this);
   }
   componentDidMount() {
     const { params } = this.props.match;
@@ -64,8 +70,56 @@ class NewsDetailView extends React.Component {
         }
       );
   }
+  postComment(articleId, name, message) {
+    const requestOptions = {
+      method: 'POST',
+      headers: new Headers({ 'Content-type': 'application/x-www-form-urlencoded' }),
+      body: `article_id=${articleId}&detail=${message}&name=${name}`,
+    };
+    fetch('/comments', requestOptions)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+  resetCommentForm() {
+    this.setState({
+      commentForm: {
+        name: '',
+        message: '',
+      },
+    });
+  }
+  onChangeNameHandler(event) {
+    const name = event.target.value;
+    this.setState({
+      commentForm: {
+        ...this.state.commentForm,
+        name: name,
+      },
+    });
+  }
+  onChangeMessageHandler(event) {
+    const message = event.target.value;
+    this.setState({
+      commentForm: {
+        ...this.state.commentForm,
+        message: message,
+      },
+    });
+  }
+  onSubmitCommentHandler(event) {
+    event.preventDefault();
+    const { id } = this.props.match.params;
+    const { name, message } = this.state.commentForm;
+    this.postComment(id, name, message);
+    this.fetchComments(id);
+    this.resetCommentForm();
+  }
   render() {
-    const { article, comments } = this.state;
+    const { article, comments, commentForm } = this.state;
     return (
       <>
         <div className="row">
@@ -81,7 +135,13 @@ class NewsDetailView extends React.Component {
           <CommentViewPanel comments={comments} />
         </div>
         <div className="row">
-          <CommentPostPanel id={article.id} />
+          <CommentPostPanel
+            name={commentForm.name}
+            message={commentForm.message}
+            onChangeName={this.onChangeNameHandler}
+            onChangeMessage={this.onChangeMessageHandler}
+            onSubmitComment={this.onSubmitCommentHandler}
+          />
         </div>
       </>
     );
