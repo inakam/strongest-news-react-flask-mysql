@@ -1,7 +1,7 @@
 import React from 'react';
-import './App.css';
-import NewsPanel from './NewsPanel';
 import queryString from 'query-string';
+
+import NewsPanel from '../components/NewsPanel';
 
 class NewsSearchView extends React.Component {
   constructor(props) {
@@ -33,9 +33,9 @@ class NewsSearchView extends React.Component {
   }
   render() {
     return (
-      <div class="row">
+      <div className="row">
         {this.state.items.map((item) => (
-          <NewsPanel title={item.title} img_url={item.img_url} page_url={item.id} />
+          <NewsPanel title={item.title} imgUrl={item.img_url} articleId={item.id} key={item.id} />
         ))}
       </div>
     );

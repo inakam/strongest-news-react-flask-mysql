@@ -1,8 +1,9 @@
 import React from 'react';
-import './App.css';
-import NewsPanel from './NewsPanel';
+import queryString from 'query-string';
 
-class NewsLatestView extends React.Component {
+import NewsPanel from '../components/NewsPanel';
+
+class NewsCategoryView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,7 +12,8 @@ class NewsLatestView extends React.Component {
     };
   }
   componentDidMount() {
-    fetch('/titles?limit=9')
+    const values = queryString.parse(this.props.location.search);
+    fetch(`/categories?type=${values.type}`)
       .then((res) => res.json())
       .then(
         (json) => {
@@ -31,13 +33,13 @@ class NewsLatestView extends React.Component {
   }
   render() {
     return (
-      <div class="row">
+      <div className="row">
         {this.state.items.map((item) => (
-          <NewsPanel title={item.title} img_url={item.img_url} page_url={item.id} />
+          <NewsPanel title={item.title} imgUrl={item.img_url} articleId={item.id} key={item.id} />
         ))}
       </div>
     );
   }
 }
 
-export default NewsLatestView;
+export default NewsCategoryView;

@@ -3,7 +3,7 @@ import './App.css';
 
 const NewsPanel = (props) => (
   <div className="col-md-4">
-    <a href={`/article/${props.page_url}`}>
+    <a href={`/article/${props.articleId}`}>
       <div className="card">
         <div className="card-header">
           <p className="card-title">{props.title}</p>
@@ -12,7 +12,7 @@ const NewsPanel = (props) => (
           <img
             className="d-block mx-auto"
             style={{ height: '200px' }}
-            src={`${props.img_url}`}
+            src={`${props.imgUrl}`}
             onError={(e) => (e.target.src = '/img/noimage.png')}
             alt={`${props.title}`}
           />
