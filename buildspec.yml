@@ -26,8 +26,6 @@ phases:
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME_NGINX:$IMAGE_TAG >> imageDetail.json
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME_MYSQL:$IMAGE_TAG >> imageDetail.json
       - aws ecs describe-task-definition --task-definition $TASK_FAMILY | jq '.taskDefinition | (.containerDefinitions[] | select(.name == "app") | .image) = "<APP_IMAGE>" | del(.taskDefinitionArn, .revision, .status, .requiresAttributes) ' > taskdef.json
-      - sh -x codebuild/change_docker_compose.sh $IMAGE_REPO_NAME_FLASK $IMAGE_REPO_NAME_REACT $IMAGE_REPO_NAME_NGINX $IMAGE_REPO_NAME_MYSQL $AWS_ACCOUNT_ID
-      - ls -al
       - sh -x codebuild/change_appspec.sh $TASK_FAMILY
       - cat appspec.yaml
 artifacts:

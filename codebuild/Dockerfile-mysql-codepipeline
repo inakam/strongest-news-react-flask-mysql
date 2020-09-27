@@ -1,4 +1,4 @@
 FROM mysql:8.0
 
 COPY ./database /docker-entrypoint-initdb.d
-COPY ./codebuild/mysql.conf /etc/mysql/mysql.cnf
+COPY ./codebuild/my.cnf /etc/mysql/conf.d/my.cnf
