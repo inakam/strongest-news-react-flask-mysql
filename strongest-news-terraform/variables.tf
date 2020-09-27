@@ -1,5 +1,5 @@
 provider "aws" {
-  version                 = "~> 2.42"
+  version                 = "~> 2.70"
   region                  = "ap-northeast-1"
   shared_credentials_file = "~/.aws/credentials"
   profile                 = "emtg"
@@ -53,15 +53,3 @@ variable "public_subnet_1c" {
   type        = string
   default     = "subnet-8b4470d0"
 }
-
-# variable "private_subnet_1a" {
-#   description = "ID for the Private Subnet 1a"
-#   type        = string
-#   default     = "subnet-0055a56f9ad41d5ee"
-# }
-
-# variable "private_subnet_1c" {
-#   description = "ID for the Private Subnet 1c"
-#   type        = string
-#   default     = "subnet-097b12be67c4627f9"
-# }
