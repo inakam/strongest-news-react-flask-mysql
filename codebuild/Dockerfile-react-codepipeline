@@ -1,0 +1,7 @@
+FROM node:14-stretch-slim AS base
+WORKDIR /usr/src/app
+
+FROM base
+COPY ./docker-images-react ./
+RUN yarn install
+ENTRYPOINT [ "yarn", "start" ]

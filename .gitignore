@@ -27,3 +27,6 @@ docker-images-nginx/log
 __pycache__
 
 data_seed_scripts/*.sql
+
+.terraform
+terraform.*
