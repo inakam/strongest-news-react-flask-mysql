@@ -1,5 +1,4 @@
 FROM mysql:8.0
 
 COPY ./database /docker-entrypoint-initdb.d
-
-CMD ["mysqld", "--character-set-server=utf8", "--collation-server=utf8_unicode_ci", "--skip-character-set-client-handshake", "--default_authentication_plugin=mysql_native_password"]
+COPY ./codebuild/mysql.conf /etc/mysql/mysql.cnf
