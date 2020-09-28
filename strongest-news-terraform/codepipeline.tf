@@ -146,7 +146,7 @@ resource "aws_iam_role" "codepipeline-role" {
   )
   force_detach_policies = false
   max_session_duration  = 3600
-  name                  = "AWSCodePipelineServiceRole-emtg-framework-pipeline"
+  name                  = "AWSCodePipelineServiceRole-${var.name}-pipeline"
   path                  = "/service-role/"
   tags                  = {}
 }
@@ -378,7 +378,7 @@ resource "aws_cloudwatch_event_rule" "cwe" {
     }
   )
   is_enabled = true
-  name       = "codepipeline-emtg-framework-master"
+  name       = "codepipeline-${var.name}-master"
   tags       = {}
 }
 
