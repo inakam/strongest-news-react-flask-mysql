@@ -1,5 +1,5 @@
 resource "aws_iam_instance_profile" "instance_role_ecs" {
-  name = "instance_role_ecs"
+  name = "instance_role_ecs_${var.name}"
   role = aws_iam_role.instance_role_ecs.name
 }
 
